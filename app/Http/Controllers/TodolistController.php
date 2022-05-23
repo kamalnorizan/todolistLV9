@@ -105,11 +105,22 @@ class TodolistController extends Controller
         // $task->description = 'Task Description Test';
         // $todolist->tasks()->save($task);
 
-        $todolist->tasks()->saveMany([
-            new Task(['description'=>'Task save many 1']),
-            new Task(['description'=>'Task save many 2']),
-            new Task(['description'=>'Task save many 3']),
-            new Task(['description'=>'Task save many 4']),
+        // $todolist->tasks()->saveMany([
+        //     new Task(['description'=>'Task save many 1']),
+        //     new Task(['description'=>'Task save many 2']),
+        //     new Task(['description'=>'Task save many 3']),
+        //     new Task(['description'=>'Task save many 4']),
+        // ]);
+
+        // $todolist->tasks()->create([
+        //     'description'=>'Task create 1'
+        // ]);
+
+        $todolist->tasks()->createMany([
+            ['description'=>'Task create Many 1'],
+            ['description'=>'Task create Many 2'],
+            ['description'=>'Task create Many 3'],
+            ['description'=>'Task create Many 4']
         ]);
 
         dd($todolist->tasks);
