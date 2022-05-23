@@ -15,11 +15,28 @@ class TodolistController extends Controller
      */
     public function index()
     {
-        $todolists = Todolist::with('user','tasks')->get();
+        $todolists = Todolist::with('user')->get();
         foreach ($todolists as $key => $todolist) {
             echo $todolist->user->name.' - '.$todolist->title.'<br>';
+            // $todolist->load('tasks');
             foreach ($todolist->tasks as $key => $task) {
                echo '  - '.$task->description.'<br>';
+            }
+            echo '<br>';
+        }
+    }
+
+    public function lazyeager()
+    {
+        $todolists = Todolist::with('user')->get();
+        foreach ($todolists as $key => $todolist) {
+            echo $todolist->user->name.' - '.$todolist->title.'<br>';
+            // $todolist->load('user.todolists');
+            foreach ($todolist->user->todolists as $key => $todolistNest) {
+               echo '  - '.$todolistNest->title.'<br>';
+               if($todolistNest->id < 10){
+                    $todolistNest->load('user');
+               }
             }
             echo '<br>';
         }
