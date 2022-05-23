@@ -28,4 +28,9 @@ class Task extends Model
     {
         return $this->belongsTo(Todolist::class, 'todolist_id', 'id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Gambar::class,'imageable');
+    }
 }

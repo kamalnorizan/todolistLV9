@@ -13,9 +13,9 @@ use App\Http\Controllers\TodolistController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-DB::listen(function ($event) {
-    dump($event->sql);
-});
+// DB::listen(function ($event) {
+//     dump($event->sql);
+// });
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +23,5 @@ Route::get('/', function () {
 
 Route::get('/todolist', [TodolistController::class,'index']);
 Route::get('/todolist/lazyeager', [TodolistController::class,'lazyeager']);
+Route::get('/todolist/polyrel', [TodolistController::class,'polyrel']);
+Route::get('/todolist/polyreltask', [TodolistController::class,'polyreltask']);

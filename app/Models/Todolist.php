@@ -38,4 +38,9 @@ class Todolist extends Model
     {
         return $this->hasMany(Task::class, 'todolist_id', 'id');
     }
+
+    public function images()
+    {
+        return $this->morphMany(Gambar::class,'imageable');
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Todolist;
+use App\Models\Gambar;
+use App\Models\Task;
 use App\Http\Requests\StoreTodolistRequest;
 use App\Http\Requests\UpdateTodolistRequest;
 
@@ -40,6 +42,34 @@ class TodolistController extends Controller
             }
             echo '<br>';
         }
+    }
+
+    public function polyrel()
+    {
+        $todolist = Todolist::find(2);
+        $gambar1 = new Gambar;
+        $gambar1->path = 'uploads/c.jpg';
+        $todolist->images()->save($gambar1);
+
+        $gambar2 = new Gambar;
+        $gambar2->path = 'uploads/d.jpg';
+        $todolist->images()->save($gambar2);
+
+        dd($todolist->images);
+    }
+
+    public function polyreltask()
+    {
+        $task = Task::find(1);
+        $gambar1 = new Gambar;
+        $gambar1->path = 'uploads/e.jpg';
+        $task->images()->save($gambar1);
+
+        $gambar2 = new Gambar;
+        $gambar2->path = 'uploads/f.jpg';
+        $task->images()->save($gambar2);
+
+        dd($task->images);
     }
 
     /**
