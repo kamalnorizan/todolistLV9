@@ -25,4 +25,5 @@ Route::get('/todolist', [TodolistController::class,'index']);
 Route::get('/todolist/lazyeager', [TodolistController::class,'lazyeager']);
 Route::get('/todolist/polyrel', [TodolistController::class,'polyrel']);
 Route::get('/todolist/polyreltask', [TodolistController::class,'polyreltask']);
+Route::get('/todolist/todolistScope', [TodolistController::class,'todolistScope']);
 Route::get('/todolist/{todolist}', [TodolistController::class,'show']);

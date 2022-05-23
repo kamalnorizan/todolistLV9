@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Scopes\ActiveScope;
 class Todolist extends Model
 {
     use HasFactory;
@@ -18,6 +18,11 @@ class Todolist extends Model
     public $timestamps = true;
 
     protected $guarded = ['id'];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new ActiveScope);
+    }
 
     /**
      * Get the user that owns the Todolist

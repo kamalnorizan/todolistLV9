@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Todolist;
 use App\Models\Gambar;
 use App\Models\Task;
+use App\Models\Scopes\ActiveScope;
 use App\Http\Requests\StoreTodolistRequest;
 use App\Http\Requests\UpdateTodolistRequest;
 
@@ -70,6 +71,19 @@ class TodolistController extends Controller
         $task->images()->save($gambar2);
 
         dd($task->images);
+    }
+
+    public function todolistScope()
+    {
+        $tasks = Task::withoutGlobalScope('App\Models\Scopes\ActiveScope')->get();
+
+        $tasks = Task::withoutGlobalScope(ActiveScope::class)->get();
+
+        $tasks = Task::withoutGlobalScopes()->get();
+
+
+
+        dd($tasks);
     }
 
     /**
