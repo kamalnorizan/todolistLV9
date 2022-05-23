@@ -101,9 +101,16 @@ class TodolistController extends Controller
      */
     public function show(Todolist $todolist)
     {
-        $task = new Task;
-        $task->description = 'Task Description Test';
-        $todolist->tasks()->save($task);
+        // $task = new Task;
+        // $task->description = 'Task Description Test';
+        // $todolist->tasks()->save($task);
+
+        $todolist->tasks()->saveMany([
+            new Task(['description'=>'Task save many 1']),
+            new Task(['description'=>'Task save many 2']),
+            new Task(['description'=>'Task save many 3']),
+            new Task(['description'=>'Task save many 4']),
+        ]);
 
         dd($todolist->tasks);
     }
