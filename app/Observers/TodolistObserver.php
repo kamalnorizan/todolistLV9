@@ -6,6 +6,7 @@ use App\Models\Todolist;
 
 class TodolistObserver
 {
+    // public $afterCommit = true;
 
     /**
      * Handle the Todolist "created" event.

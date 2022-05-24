@@ -50,4 +50,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Todolist::class, 'user_id', 'id');
     }
+
+    public function getNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
+    public function getEmailAttribute($value)
+    {
+        $mail = explode('@',$value);
+        return $mail[1];
+    }
 }
