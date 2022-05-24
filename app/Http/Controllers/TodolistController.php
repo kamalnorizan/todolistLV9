@@ -6,6 +6,7 @@ use App\Models\Todolist;
 use App\Models\Gambar;
 use App\Models\Task;
 use App\Models\Scopes\ActiveScope;
+use App\Models\Scopes\StatusScope;
 use App\Http\Requests\StoreTodolistRequest;
 use App\Http\Requests\UpdateTodolistRequest;
 
@@ -75,13 +76,12 @@ class TodolistController extends Controller
 
     public function todolistScope()
     {
-        $tasks = Task::withoutGlobalScope('App\Models\Scopes\ActiveScope')->get();
+        // $tasks = Task::all();
+        // $tasks = Task::withoutGlobalScope('App\Models\Scopes\ActiveScope')->get();
 
-        $tasks = Task::withoutGlobalScope(ActiveScope::class)->get();
+        $tasks = Task::withoutGlobalScope(StatusScope::class)->get();
 
-        $tasks = Task::withoutGlobalScopes()->get();
-
-
+        // $tasks = Task::withoutGlobalScopes()->get();
 
         dd($tasks);
     }

@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Scopes\ActiveScope;
+use App\Models\Scopes\StatusScope;
+
 class Task extends Model
 {
     use HasFactory;
@@ -21,7 +22,7 @@ class Task extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new ActiveScope);
+        static::addGlobalScope(new StatusScope);
     }
 
     /**
