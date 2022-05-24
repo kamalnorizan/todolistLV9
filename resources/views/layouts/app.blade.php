@@ -38,6 +38,7 @@
                         <li class="nav-item"><a href="/todolist" class="nav-link">Todolist</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Tasks</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Users</a></li>
                         @endauth
                     </ul>
 
