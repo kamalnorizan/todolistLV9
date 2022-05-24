@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('user', [UserController::class,'index'])->name('user.index');
     Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
     Route::post('user/storePermission', [UserController::class,'storePermission'])->name('user.storePermission');
+    Route::post('user/getRolePermissions', [UserController::class,'getRolePermissions'])->name('user.getRolePermissions');
+    Route::post('user/user.roleassignpermission', [UserController::class,'user.roleassignpermission'])->name('user.user.roleassignpermission');
 });
 
 Auth::routes();

@@ -34,4 +34,19 @@ class UserController extends Controller
 
         return response()->json(['status'=>'success']);
     }
+
+    public function getRolePermissions(Request $request)
+    {
+        $role = Role::find($request->id);
+        $permissions = $role->permissions;
+
+        $data['permissions']=$permissions;
+
+        return response()->json($data);
+    }
+
+    public function roleassignpermission(Request $request)
+    {
+        # code...
+    }
 }
