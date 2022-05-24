@@ -29,6 +29,17 @@ class Gambar extends Model
         return $q->where('imageable_type','App\Models\Task');
     }
 
+    public function scopeImage($q, $type='')
+    {
+        $model='';
+        if($type=='task'){
+            $model='App\Models\Task';
+        }elseif($type=='todolist'|| $type==''){
+            $model = 'App\Models\Todolist';
+        }
+        return $q->where('imageable_type',$model);
+    }
+
     public function imageable()
     {
         return $this->morphTo();

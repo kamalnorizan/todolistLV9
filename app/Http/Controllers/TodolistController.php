@@ -88,7 +88,8 @@ class TodolistController extends Controller
 
     public function localScope()
     {
-        $images = Gambar::todolist()->get();
+        // $images = Gambar::todolist()->get();
+        $images = Gambar::image('todolist')->get();
         dd($images);
     }
 
