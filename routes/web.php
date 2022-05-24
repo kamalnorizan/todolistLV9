@@ -29,6 +29,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/todolist/todolistScope', [TodolistController::class,'todolistScope']);
     Route::get('/todolist/localScope', [TodolistController::class,'localScope']);
     Route::get('/todolist/{todolist}', [TodolistController::class,'show']);
+
+    Route::get('users', );
 });
 
 Auth::routes();
