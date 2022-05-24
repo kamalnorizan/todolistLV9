@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodolistController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/todolist/localScope', [TodolistController::class,'localScope']);
     Route::get('/todolist/{todolist}', [TodolistController::class,'show']);
 
-    Route::get('users', );
+    //User management module
+    Route::get('user', [UserController::class,'index'])->name('user.index');
 });
 
 Auth::routes();
