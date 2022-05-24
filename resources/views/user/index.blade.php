@@ -72,7 +72,13 @@
                     </button>
             </div>
             <div class="modal-body">
-
+                <form id="frmAddRole">
+                    <div class="form-group">
+                      <label for="role">Role</label>
+                      <input type="text" class="form-control" name="role" id="role" aria-describedby="help-role" placeholder="">
+                      <small id="help-role" class="form-text text-muted">Please enter role name</small>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -81,4 +87,13 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    <script>
+        $('#btnAddRole').click(function (e) {
+            e.preventDefault();
+            
+        });
+    </script>
 @endsection
