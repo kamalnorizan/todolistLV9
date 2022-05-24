@@ -25,4 +25,13 @@ class UserController extends Controller
 
         return response()->json(['status'=>'success']);
     }
+
+    public function storePermission(Request $request)
+    {
+        $permission = new Permission;
+        $permission->name = $request->permission;
+        $permission->save();
+
+        return response()->json(['status'=>'success']);
+    }
 }

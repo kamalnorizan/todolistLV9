@@ -29,10 +29,12 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Permissions</div>
+                <div class="card-header">Permissions<button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#mdl-addpermission">
+                    Add Permission
+                  </button></div>
 
                 <div class="card-body">
-                   <table class="table">
+                   <table class="table" id="tbl-permission">
                        <tr>
                            <td>Permission</td>
                            <td>Action</td>
@@ -58,18 +60,39 @@
         </div>
     </div>
 </div>
-<!-- Button trigger modal -->
 
-
+<!-- Modal -->
+<div class="modal fade" id="mdl-addpermission" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Permission</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                  <label for="permission">Permission</label>
+                  <input type="text" class="form-control" name="permission" id="permission" aria-describedby="helpId" placeholder="">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button data-dismiss="modal" id="btnAddPermission" type="button" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="mdl-addrole" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add New Role</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form id="frmAddRole">
@@ -112,6 +135,28 @@
                             '</tr>'
                         );
 
+                    }
+                });
+            });
+
+            $('#btnAddPermission').click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "post",
+                    url: "{{route('user.storePermission')}}",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        permission: $('#permission').val()
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $('#mdl-addpermission').modal('hide');
+                        $('#tbl-permission').append(
+                            '<tr>'+
+                               '<td>'+$('#permission').val()+'</td>'+
+                               '<td>Action</td>'+
+                            '</tr>'
+                        );
                     }
                 });
             });
