@@ -35,6 +35,7 @@
                 </div>
             </div>
         </div>
+        @can('delete todolist')
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">Permissions<button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#mdl-addpermission">
@@ -57,6 +58,7 @@
                 </div>
             </div>
         </div>
+        @endcan
         <div class="col-md-12 mt-5">
             <div class="card">
                 <div class="card-header">Users</div>

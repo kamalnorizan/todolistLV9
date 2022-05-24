@@ -57,9 +57,9 @@ class User extends Authenticatable
         return strtoupper($value);
     }
 
-    public function getEmailAttribute($value)
-    {
-        $mail = explode('@',$value);
-        return $mail[1];
-    }
+    // public function getEmailAttribute($value)
+    // {
+    //     $mail = explode('@',$value);
+    //     return $mail[1];
+    // }
 }
