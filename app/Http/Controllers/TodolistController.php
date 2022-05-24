@@ -86,6 +86,12 @@ class TodolistController extends Controller
         dd($tasks);
     }
 
+    public function localScope()
+    {
+        $images = Gambar::todolist()->get();
+        dd($images);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
