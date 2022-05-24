@@ -10,7 +10,7 @@
                   </button></div>
 
                 <div class="card-body">
-                   <table class="table">
+                   <table class="table" id="tbl-role">
                        <tr>
                            <td>Role</td>
                            <td>Permissions</td>
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="btnAddRole" type="button" class="btn btn-primary">Save</button>
+                <button data-dismiss="modal" id="btnAddRole" type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -91,9 +91,30 @@
 
 @section('script')
     <script>
-        $('#btnAddRole').click(function (e) {
-            e.preventDefault();
-            
+        $(document).ready(function () {
+
+            $('#btnAddRole').click(function (e) {
+                $.ajax({
+                    type: "post",
+                    url: "{{route('user.storeRole')}}",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        role: $('#role').val()
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        $('#mdl-addrole').modal('hide');
+                        $('#tbl-role').append(
+                            '<tr>'+
+                               '<td>'+$('#role').val()+'</td>'+
+                               '<td></td>'+
+                               '<td>Action</td>'+
+                            '</tr>'
+                        );
+
+                    }
+                });
+            });
         });
     </script>
 @endsection

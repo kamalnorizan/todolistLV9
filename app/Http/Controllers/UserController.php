@@ -16,4 +16,13 @@ class UserController extends Controller
         $permissions = Permission::all();
         return view('user.index',compact('users','roles','permissions'));
     }
+
+    public function storeRole(Request $request)
+    {
+        $role = new Role;
+        $role->name = $request->role;
+        $role->save();
+
+        return response()->json(['status'=>'success']);
+    }
 }

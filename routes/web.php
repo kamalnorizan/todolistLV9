@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     //User management module
     Route::get('user', [UserController::class,'index'])->name('user.index');
+    Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
 });
 
 Auth::routes();
