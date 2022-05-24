@@ -24,6 +24,26 @@ class Todolist extends Model
         static::addGlobalScope(new ActiveScope);
     }
 
+    // Test 123
+    // Test 123 | 8
+    public function getTitleAttribute($value)
+    {
+        return $value.' | '.strlen($value);
+
+        // $length = strlen($value);
+        // return $value.'|'.$length;
+
+        // $title = $value;
+        // $length = strlen($value);
+
+        // return $title.'|'.$length;
+    }
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title']=strtoupper($value);
+    }
+
     /**
      * Get the user that owns the Todolist
      *
