@@ -36,7 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
     Route::post('user/storePermission', [UserController::class,'storePermission'])->name('user.storePermission');
     Route::post('user/getRolePermissions', [UserController::class,'getRolePermissions'])->name('user.getRolePermissions');
-    Route::post('user/user.roleassignpermission', [UserController::class,'user.roleassignpermission'])->name('user.user.roleassignpermission');
+    Route::post('user/roleassignpermission', [UserController::class,'roleassignpermission'])->name('user.roleassignpermission');
+    Route::post('user/userassignrole', [UserController::class,'userassignrole'])->name('user.userassignrole');
 });
 
 Auth::routes();

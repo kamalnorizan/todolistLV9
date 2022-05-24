@@ -19,7 +19,13 @@
                        @foreach ($roles as $role)
                        <tr>
                            <td>{{$role->name}}</td>
-                           <td>{{$role->permissions}}</td>
+                           <td>
+                            @foreach ($role->permissions as $permission)
+                                <button class="btn">
+                                    <span class="badge badge-primary">{{$permission->name}}</span>
+                                </button>
+                            @endforeach
+                        </td>
                            <td><button type="button" class="btn btn-primary btn-sm" data-name="{{$role->name}}"  data-id="{{$role->id}}" data-toggle="modal" data-target="#mdl-assignpermission">
                             Assign Permission
                           </button></td>
@@ -53,10 +59,56 @@
         </div>
         <div class="col-md-12 mt-5">
             <div class="card">
-                <div class="card-header">Title</div>
+                <div class="card-header">Users</div>
 
                 <div class="card-body">
-                   content
+                   <table class="table">
+                       <tr>
+                           <td>
+                               Name
+                           </td>
+                           <td>
+                               Email Address
+                           </td>
+                           <td>
+                               Roles/Permissions
+                           </td>
+                           <td>
+                               Action
+                           </td>
+                       </tr>
+                       @foreach ($users as $user)
+                       <tr>
+                            <td>
+                               {{$user->name}}
+                            </td>
+                            <td>
+                                {{$user->email}}
+                            </td>
+                            <td>
+                                @foreach ($user->roles as $role)
+                                    <span class="badge badge-primary">{{$role->name}}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                <div class="dropdown open">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                                Assign Role
+                                            </button>
+                                    <div class="dropdown-menu" aria-labelledby="triggerId">
+                                        @foreach ($roles as $role)
+                                        <button class="dropdown-item assignroletouser-btn" data-roleid="{{$role->id}}" data-userid="{{$user->id}}">{{$role->name}}</button>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                   </table>
+                    <div class="d-flex justify-content-center">
+                        {!! $users->links() !!}
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,7 +259,6 @@
             var id = button.data('id');
             $('#role_id-hdn').val(id);
             $('#rolename').text(name);
-            $('#addedPermission').empty();
             $.ajax({
                 type: "post",
                 url: "{{route('user.getRolePermissions')}}",
@@ -217,7 +268,7 @@
                 },
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+                    addPermissionsBadge(response.permissions);
                 }
             });
         });
@@ -234,13 +285,40 @@
                 },
                 dataType: "json",
                 success: function (response) {
-                    $('#addedPermission').append(
-                        '<button class="btn"><span class="badge badge-primary">'+$('#rolepermissions').val()+'</span>'+
-                        '</button>'
-                    );
+                    addPermissionsBadge(response.permissions);
                 }
             });
         });
+
+        $('.assignroletouser-btn').click(function (e) {
+            e.preventDefault();
+            var userid = $(this).attr('data-userid');
+            var roleid = $(this).attr('data-roleid');
+
+            $.ajax({
+                type: "post",
+                url: "{{route('user.userassignrole')}}",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    userid: userid,
+                    roleid: roleid,
+                },
+                dataType: "json",
+                success: function (response) {
+
+                }
+            });
+        });
+
+        function addPermissionsBadge(permissions){
+            $('#addedPermission').empty();
+            $.each(permissions, function (indexInArray, permission) {
+                $('#addedPermission').append(
+                    '<button class="btn"><span class="badge badge-primary">'+permission.name+'</span>'+
+                    '</button>'
+                );
+            });
+        }
 
     </script>
 @endsection
