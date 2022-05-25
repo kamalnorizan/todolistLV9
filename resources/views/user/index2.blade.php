@@ -3,6 +3,28 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-12">
+                @role('Admin')
+                    <h2>Role admin</h2>
+                @endrole
+
+                @hasanyrole('Writer|Moderator')
+                    <h2>Role Writer | Moderator</h2>
+                @endhasanyrole
+
+                @hasallroles('Writer|Moderator')
+                    <h2>Role Writer & Moderator</h2>
+                @endhasallroles
+
+                @unlessrole('Admin')
+                    <h2>Tiada Role Admin</h2>
+                @endunlessrole
+
+                @hasexactroles('Admin|Moderator')
+                    <h2>Wajib Admin & Moderator sahaja</h2>
+                @endhasexactroles
+
+            </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">Roles<button type="button" class="btn btn-primary btn-sm float-right"
@@ -38,9 +60,13 @@
                     </div>
                 </div>
             </div>
+
+
+
             @cannot('delete todolist')
             <h3>Test</h3>
             @endcannot
+
             @canany(['delete todolist','delete task'])
                 <div class="col-md-6">
                     <div class="card">
