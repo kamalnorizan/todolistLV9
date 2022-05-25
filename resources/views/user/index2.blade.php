@@ -291,7 +291,7 @@
             });
         });
 
-        $('.assignroletouser-btn').click(function(e) {
+        $(document).on('click','.assignroletouser-btn',function(e) {
             e.preventDefault();
             var userid = $(this).attr('data-userid');
             var roleid = $(this).attr('data-roleid');
@@ -306,7 +306,7 @@
                 },
                 dataType: "json",
                 success: function(response) {
-
+                    userTbl.ajax.reload();
                 }
             });
         });
