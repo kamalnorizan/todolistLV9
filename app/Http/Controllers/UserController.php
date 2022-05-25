@@ -29,17 +29,22 @@ class UserController extends Controller
     {
         $users=User::select('*');
         $roles = Role::all();
+        $permissions = Permission::all();
         return Datatables::of($users)
             ->addIndexColumn()
             ->addColumn('rolespermission', function(User $user){
                 $badges='';
                 foreach ($user->roles as $key => $role) {
-                    $badges.= '<span class="badge badge-primary"> '.$role->name.' </span>';
+                    $badges.= '<button data-userid="'.$user->id.'" data-rpid="'.$role->id.'" data-type="role" class="badge badge-primary removeRolePermisson"> '.$role->name.' </button> ';
+                }
+
+                foreach ($user->permissions as $key => $permission) {
+                    $badges.= '<button data-userid="'.$user->id.'" data-rpid="'.$permission->id.'" data-type="permission" class="badge badge-warning removeRolePermisson"> '.$permission->name.' </button> ';
                 }
 
                 return $badges;
             })
-            ->addColumn('action', function(User $user) use ($roles){
+            ->addColumn('action', function(User $user) use ($roles, $permissions){
                 $buttons='';
                 foreach ($roles as $role){
                     $buttons=$buttons.'<button class="dropdown-item assignroletouser-btn" data-roleid="'.$role->id.'" data-userid="'.$user->id.'">'.$role->name.'</button>';
@@ -50,7 +55,20 @@ class UserController extends Controller
                 $dropdown .= $buttons;
                 $dropdown .=     '</div>';
                 $dropdown .= '</div>';
-                return $dropdown;
+
+                $permissionBtn ='';
+                foreach ($permissions as $permission){
+                    $permissionBtn=$permissionBtn.'<button class="dropdown-item assignpermissiontouser-btn" data-permissionid="'.$permission->id.'" data-userid="'.$user->id.'">'.$permission->name.'</button>';
+                }
+                $permissiondropdown = '<div class="dropdown open">';
+                $permissiondropdown .=     '<button class="btn btn-primary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Assign Permission</button>';
+                $permissiondropdown .=   '<div class="dropdown-menu" aria-labelledby="triggerId">';
+                $permissiondropdown .= $permissionBtn;
+                $permissiondropdown .=     '</div>';
+                $permissiondropdown .= '</div>';
+
+                $allbuttons = $dropdown .' '.$permissiondropdown;
+                return $allbuttons;
             })
             ->rawColumns(['rolespermission','action'])
             ->make(true);
@@ -99,5 +117,29 @@ class UserController extends Controller
         $user->assignRole($role);
 
         return response()->json(['status'=>'success']);
+    }
+
+    public function userassignpermission(Request $request)
+    {
+        $user = User::find($request->userid);
+        $permission = Permission::find($request->permissionid);
+        $user->givePermissionTo($permission);
+
+        return response()->json(['status'=>'success']);
+    }
+
+    public function removeuserrolepermission(Request $request)
+    {
+        $user = User::find($request->userid);
+        if($request->type=='role'){
+            $role = Role::find($request->rpid);
+            $user->removeRole($role);
+        }else{
+            $permission = Permission::find($request->rpid);
+            $user->revokePermissionTo($permission);
+        }
+
+        return response()->json(['status'=>'success']);
+
     }
 }

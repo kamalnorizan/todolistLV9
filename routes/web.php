@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user/getRolePermissions', [UserController::class,'getRolePermissions'])->name('user.getRolePermissions');
     Route::post('user/roleassignpermission', [UserController::class,'roleassignpermission'])->name('user.roleassignpermission');
     Route::post('user/userassignrole', [UserController::class,'userassignrole'])->name('user.userassignrole');
+    Route::post('user/userassignpermission', [UserController::class,'userassignpermission'])->name('user.userassignpermission');
+    Route::post('user/removeuserrolepermission', [UserController::class,'removeuserrolepermission'])->name('user.removeuserrolepermission');
 });
 
 Auth::routes();

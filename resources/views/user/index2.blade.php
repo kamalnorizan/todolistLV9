@@ -306,7 +306,26 @@
                 },
                 dataType: "json",
                 success: function(response) {
-                    userTbl.ajax.reload();
+                    userTbl.ajax.reload(null,false);
+                }
+            });
+        });
+        $(document).on('click','.assignpermissiontouser-btn',function(e) {
+            e.preventDefault();
+            var userid = $(this).attr('data-userid');
+            var permissionid = $(this).attr('data-permissionid');
+
+            $.ajax({
+                type: "post",
+                url: "{{ route('user.userassignpermission') }}",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    userid: userid,
+                    permissionid: permissionid,
+                },
+                dataType: "json",
+                success: function(response) {
+                    userTbl.ajax.reload(null,false);
                 }
             });
         });
@@ -320,5 +339,50 @@
                 );
             });
         }
+
+        $(document).on('click','.removeRolePermisson',function(e){
+            var userid=$(this).attr('data-userid');
+            var rpid=$(this).attr('data-rpid');
+            var type=$(this).attr('data-type');
+
+            swal({
+                title: "Are you sure?",
+                text: "You are going to remoce this user role/permission!",
+                icon: "warning",
+                buttons: {cancel: {
+                    text: "Cancel",
+                    value: null,
+                    visible: true,
+                    className: "",
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Yes, i'm sure!",
+                    value: true,
+                    visible: true,
+                    className: "btn-danger",
+                    closeModal: true
+                }}
+            }).then((value)=>{
+                // alert(value);
+                if(value==true){
+                    $.ajax({
+                        type: "post",
+                        url: "{{route('user.removeuserrolepermission')}}",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            userid: userid,
+                            rpid: rpid,
+                            type: type
+                        },
+                        dataType: "json",
+                        success: function (response) {
+                            userTbl.ajax.reload(null,false);
+                        }
+                    });
+                }
+            });
+
+        });
     </script>
 @endsection
