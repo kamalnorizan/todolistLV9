@@ -9,6 +9,16 @@ use Spatie\Permission\Models\Permission;
 use DataTables;
 class UserController extends Controller
 {
+    //Auth::user()->getPermissionNames(); -- Semua permission untuk user (String)
+    //Auth::user()->getDirectPermission(); -- Semua direct permission untuk user
+    //Auth::user()->getPermissionViaRoles(); -- permission untuk user via roles
+    //Auth::user()->getAllPermissions(); -- Semua permission untuk user (Collection)
+
+    // Auth::user()->getRoleNames() Collection of roles
+    // User::role('Admin')->get();
+    // User::doesntHave('roles')->get();
+    // User::permission('edit todolist')->get();
+
     public function index()
     {
         $users = User::all();
@@ -29,6 +39,9 @@ class UserController extends Controller
     public function ajaxLoadUserTable(Request $request)
     {
         $users=User::select('*');
+
+
+
         $roles = Role::all();
         $permissions = Permission::all();
         return Datatables::of($users)
