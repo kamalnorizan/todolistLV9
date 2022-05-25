@@ -86,37 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
-                                    <tr>
-                                        <td>
-                                            {{ $user->name }}
-                                        </td>
-                                        <td>
-                                            {{ $user->email }}
-                                        </td>
-                                        <td>
-                                            @foreach ($user->roles as $role)
-                                                <span class="badge badge-primary">{{ $role->name }}</span>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <div class="dropdown open">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Assign Role
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                    @foreach ($roles as $role)
-                                                        <button class="dropdown-item assignroletouser-btn"
-                                                            data-roleid="{{ $role->id }}"
-                                                            data-userid="{{ $user->id }}">{{ $role->name }}</button>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -223,7 +193,22 @@
 
 @section('script')
     <script>
-        $('#tblUsers').DataTable();
+          var userTbl = $('#tblUsers').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax":{
+              "type": "post",
+              "url": "{{ route('user.ajaxLoadUserTable') }}",
+              "dataType": "json",
+              "data":{ _token: "{{csrf_token()}}"}
+            },
+            "columns": [
+              { "data": "name" },
+              { "data": "email" },
+              { "data": "rolespermission" },
+              { "data": "action" }
+            ]
+        });
         $('#btnAddRole').click(function(e) {
             $.ajax({
                 type: "post",

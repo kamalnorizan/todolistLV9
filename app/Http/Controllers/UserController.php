@@ -6,15 +6,54 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
+use DataTables;
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::paginate(20);
+        $users = User::all();
         $roles = Role::all();
         $permissions = Permission::all();
         return view('user.index',compact('users','roles','permissions'));
+    }
+
+    public function index2()
+    {
+        // $users = User::all();
+        $roles = Role::all();
+        $permissions = Permission::all();
+        return view('user.index2',compact('roles','permissions'));
+    }
+
+    public function ajaxLoadUserTable(Request $request)
+    {
+        $users=User::select('*');
+        $roles = Role::all();
+        return Datatables::of($users)
+            ->addIndexColumn()
+            ->addColumn('rolespermission', function(User $user){
+                $badges='';
+                foreach ($user->roles as $key => $role) {
+                    $badges.= '<span class="badge badge-primary"> '.$role->name.' </span>';
+                }
+
+                return $badges;
+            })
+            ->addColumn('action', function(User $user) use ($roles){
+                $buttons='';
+                foreach ($roles as $role){
+                    $buttons=$buttons.'<button class="dropdown-item assignroletouser-btn" data-roleid="'.$role->id.'" data-userid="'.$user->id.'">'.$role->name.'</button>';
+                }
+                $dropdown = '<div class="dropdown open">';
+                $dropdown .=     '<button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Assign Role</button>';
+                $dropdown .=   '<div class="dropdown-menu" aria-labelledby="triggerId">';
+                $dropdown .= $buttons;
+                $dropdown .=     '</div>';
+                $dropdown .= '</div>';
+                return $dropdown;
+            })
+            ->rawColumns(['rolespermission','action'])
+            ->make(true);
     }
 
     public function storeRole(Request $request)

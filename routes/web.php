@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     //User management module
     Route::get('user', [UserController::class,'index'])->name('user.index');
+    Route::get('user2', [UserController::class,'index2'])->name('user.index2');
+    Route::post('user/ajaxLoadUserTable', [UserController::class,'ajaxLoadUserTable'])->name('user.ajaxLoadUserTable');
     Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
     Route::post('user/storePermission', [UserController::class,'storePermission'])->name('user.storePermission');
     Route::post('user/getRolePermissions', [UserController::class,'getRolePermissions'])->name('user.getRolePermissions');
