@@ -15,7 +15,70 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        Task::all(); //collection
+        Task::where('id','>',10)->get(); //collection
+        Task::where('id','=',10)->get(); //collection
+        Task::first(); //model
+        Task::find(2); //model
+        Task::paginate(3); //paginator/collection
+        dd(Task::get()->last()); //model
+    }
+
+    public function collect()
+    {
+        $array = ['a','b','c'];
+        $array2 = ['d','e','f'];
+        $collection = collect(['a','b','c']);
+        $collection2 = collect(['d','e','f']);
+        // foreach ($array2 as $key => $val) {
+        //     array_push($array,$val);
+        // }
+
+        // $array = array_merge($array,$array2);
+        // $combined = $collection->merge($collection2);
+
+
+        // $collection->prepend($collection2);
+
+        // check empty array
+        // if(sizeof($array)>0){
+        //     dd(sizeof($array));
+        // }
+
+        // if(!empty($array)){
+        //     dd(count($array));
+        // }
+
+        // check empty collection
+        // dd($collection->isEmpty());
+        // dd($collection->isNotEmpty());
+
+        // $tasks = Task::limit(40)->get();
+        // $taskGroup = $tasks->splitIn(4);
+
+        // foreach ($taskGroup as $key => $group) {
+        //     foreach ($group as $key => $task) {
+        //         echo '-'.$task->description.'<br>';
+        //     }
+        //     echo '---Next Page---<br>';
+        // }
+
+        // $collection = collect([1,2,3,4,5,6,7,8]);
+
+        // [$collect1,$collect2] = $collection->partition(function ($i) {
+        //     return $i < 4;
+        // });
+
+        $collection = collect([
+            ['name'=>'Abu', 'age'=>7, 'gender'=>'M'],
+            ['name'=>'Siti', 'age'=>12, 'gender'=>'F'],
+            ['name'=>'Tom', 'age'=>9, 'gender'=>'M'],
+            ['name'=>'Sally', 'age'=>11, 'gender'=>'F']
+        ]);
+
+        //  dd($collection->whereBetween('age',[7,9]));
+        //  dd($collection->whereIn('age',[7,9]));
+        dd($collection->sortBy('age'));
     }
 
     /**

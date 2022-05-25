@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodolistController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('user/userassignrole', [UserController::class,'userassignrole'])->name('user.userassignrole');
     Route::post('user/userassignpermission', [UserController::class,'userassignpermission'])->name('user.userassignpermission');
     Route::post('user/removeuserrolepermission', [UserController::class,'removeuserrolepermission'])->name('user.removeuserrolepermission');
+
+    Route::get('task',[TaskController::class,'index'])->name('task.index');
+    Route::get('task/collect',[TaskController::class,'collect'])->name('task.collect');
 });
 
 Auth::routes();
