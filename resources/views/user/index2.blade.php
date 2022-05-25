@@ -38,7 +38,10 @@
                     </div>
                 </div>
             </div>
-            @can('delete todolist')
+            @cannot('delete todolist')
+            <h3>Test</h3>
+            @endcannot
+            @canany(['delete todolist','delete task'])
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">Permissions<button type="button" class="btn btn-primary btn-sm float-right"
@@ -364,7 +367,7 @@
                     closeModal: true
                 }}
             }).then((value)=>{
-                // alert(value);
+
                 if(value==true){
                     $.ajax({
                         type: "post",
