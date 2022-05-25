@@ -23,17 +23,24 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/todolist', [TodolistController::class,'index']);
+    Route::middleware(['role:Admin|Writer'])->group(function () {
+        Route::get('/todolist', [TodolistController::class,'index']);
+    });
     Route::get('/todolist/lazyeager', [TodolistController::class,'lazyeager']);
     Route::get('/todolist/polyrel', [TodolistController::class,'polyrel']);
     Route::get('/todolist/polyreltask', [TodolistController::class,'polyreltask']);
     Route::get('/todolist/todolistScope', [TodolistController::class,'todolistScope']);
     Route::get('/todolist/localScope', [TodolistController::class,'localScope']);
-    Route::get('/todolist/{todolist}', [TodolistController::class,'show']);
+
+    Route::middleware(['permission:delete todolist'])->group(function () {
+        Route::get('/todolist/{todolist}', [TodolistController::class,'show']);
+    });
 
     //User management module
     Route::get('user', [UserController::class,'index'])->name('user.index');
-    Route::get('user2', [UserController::class,'index2'])->name('user.index2');
+    Route::middleware(['role_or_permission: Writer|update todolist'])->group(function () {
+        Route::get('user2', [UserController::class,'index2'])->name('user.index2');
+    });
     Route::post('user/ajaxLoadUserTable', [UserController::class,'ajaxLoadUserTable'])->name('user.ajaxLoadUserTable');
     Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
     Route::post('user/storePermission', [UserController::class,'storePermission'])->name('user.storePermission');

@@ -22,6 +22,7 @@ class UserController extends Controller
         // $users = User::all();
         $roles = Role::all();
         $permissions = Permission::all();
+
         return view('user.index2',compact('roles','permissions'));
     }
 

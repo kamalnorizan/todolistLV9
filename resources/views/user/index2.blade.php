@@ -4,9 +4,15 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                @role('Admin')
+                @role('Admin|Moderator')
                     <h2>Role admin</h2>
                 @endrole
+
+                @role('Writer')
+                    <h2>Role admin</h2>
+                @endrole
+
+                Paparan untuk semua
 
                 @hasanyrole('Writer|Moderator')
                     <h2>Role Writer | Moderator</h2>
