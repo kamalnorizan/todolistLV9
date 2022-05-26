@@ -6,7 +6,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Mail;
-
+use App\Mail\TutorialMail;
 class TaskController extends Controller
 {
     /**
@@ -90,13 +90,15 @@ class TaskController extends Controller
     public function sendEmail()
     {
         $name='John Doe';
-        Mail::send('mail.test1', compact('name'), function ($message) {
-            $message->from('kamalnorizan@gmail.com', 'Kamal Norizan');
-            $message->to('john@johndoe.com', 'John Doe');
-            $message->subject('Test Send Email');
-        });
+        // Mail::send('mail.test1', compact('name'), function ($message) {
+        //     $message->from('kamalnorizan@gmail.com', 'Kamal Norizan');
+        //     $message->to('john@johndoe.com', 'John Doe');
+        //     $message->subject('Test Send Email');
+        // });
 
-
+        // Mail::to('john@johndoe.com')->send(new TutorialMail('Zainal Abidin'));
+        Mail::to('john@johndoe.com')
+            ->queue(new TutorialMail('Zainal Abidin'));
 
         echo 'Mail sent';
     }
