@@ -7,6 +7,8 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Mail;
 use App\Mail\TutorialMail;
+use App\Jobs\SendMail;
+use Carbon\Carbon;
 class TaskController extends Controller
 {
     /**
@@ -97,9 +99,12 @@ class TaskController extends Controller
         // });
 
         // Mail::to('john@johndoe.com')->send(new TutorialMail('Zainal Abidin'));
-        Mail::to('john@johndoe.com')
-            ->queue(new TutorialMail('Zainal Abidin'));
+        // Mail::to('john@johndoe.com')
+        //     ->queue(new TutorialMail('Zainal Abidin'));
 
+        $data = ['name'=>'Kamal','email'=>'testemailgunajob@gmail.com'];
+        $mailJob = (new SendMail($data))->delay(Carbon::now()->addSecond());
+        dispatch($mailJob);
         echo 'Mail sent';
     }
 
