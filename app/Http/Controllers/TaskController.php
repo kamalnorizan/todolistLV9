@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Mail;
@@ -10,6 +11,7 @@ use App\Mail\TutorialMail;
 use App\Jobs\SendMail;
 use App\Jobs\SendMail2;
 use Carbon\Carbon;
+use PDF;
 class TaskController extends Controller
 {
     /**
@@ -102,11 +104,17 @@ class TaskController extends Controller
         // Mail::to('john@johndoe.com')->send(new TutorialMail('Zainal Abidin'));
         // Mail::to('john@johndoe.com')
         //     ->queue(new TutorialMail('Zainal Abidin'));
-
-        $data = ['name'=>'Kamal','email'=>'testemailgunajob@gmail.com'];
+        $users = User::limit(20)->get();
+        $data = ['name'=>'Kamal','email'=>'testemailgunajob@gmail.com','users'=>$users];
         $mailJob = (new SendMail2($data))->delay(Carbon::now()->addSecond());
         dispatch($mailJob);
         echo 'Mail sent';
+    }
+
+    public function userattach()
+    {
+        $users = User::limit(20)->get();
+        $pdf = PDF::loadView('mail.users',compact('users'));
     }
 
 

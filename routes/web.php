@@ -60,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('task',[TaskController::class,'index'])->name('task.index');
     Route::get('task/collect',[TaskController::class,'collect'])->name('task.collect');
     Route::get('task/sendEmail',[TaskController::class,'sendEmail'])->name('task.sendEmail');
+    Route::get('task/userattach',[TaskController::class,'userattach'])->name('task.userattach');
 
 
 });
