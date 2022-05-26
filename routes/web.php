@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodolistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,10 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    // Cache::remember('users', 15, function () {
+    //     return User::all();
+    // });
+
     Route::middleware(['role:Admin|Writer'])->group(function () {
         Route::get('/todolist', [TodolistController::class,'index']);
     });
@@ -42,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role_or_permission: Writer|update todolist'])->group(function () {
         Route::get('user2', [UserController::class,'index2'])->name('user.index2');
     });
+    Route::get('user/loadFromCache', [UserController::class,'loadFromCache'])->name('user.loadFromCache');
     Route::post('user/ajaxLoadUserTable', [UserController::class,'ajaxLoadUserTable'])->name('user.ajaxLoadUserTable');
     Route::post('user/storeRole', [UserController::class,'storeRole'])->name('user.storeRole');
     Route::post('user/storePermission', [UserController::class,'storePermission'])->name('user.storePermission');
@@ -53,7 +59,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('task',[TaskController::class,'index'])->name('task.index');
     Route::get('task/collect',[TaskController::class,'collect'])->name('task.collect');
+
+
 });
+Route::middleware('throttle:20,5')->get('task/ratelimiter',[TaskController::class,'ratelimiter'])->name('task.ratelimiter')->middleware('throttle:60,2');
 
 Auth::routes();
 

@@ -7,6 +7,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DataTables;
+use Cache;
 class UserController extends Controller
 {
     //Auth::user()->getPermissionNames(); -- Semua permission untuk user (String)
@@ -21,10 +22,21 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::all();
+
+        // $users = User::all();
+        // dd($users);
+        // Cache::put('usersFC',$users,6000);
+
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('user.index',compact('users','roles','permissions'));
+        return view('user.index',compact('roles','permissions'));
+    }
+
+    public function loadFromCache()
+    {
+        foreach (Cache::get('usersFC') as $key => $value) {
+            echo '-'.$value->name.'<br>';
+        }
     }
 
     public function index2()

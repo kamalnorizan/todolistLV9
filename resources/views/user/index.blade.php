@@ -86,7 +86,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach (cache('usersFC') as $user)
                                     <tr>
                                         <td>
                                             {{ $user->name }}

@@ -78,7 +78,12 @@ class TaskController extends Controller
 
         //  dd($collection->whereBetween('age',[7,9]));
         //  dd($collection->whereIn('age',[7,9]));
-        dd($collection->sortBy('age'));
+        dd($collection->sortByDesc('age'));
+    }
+
+    public function ratelimiter()
+    {
+        echo 'Accessed ratelimiter function';
     }
 
     /**
