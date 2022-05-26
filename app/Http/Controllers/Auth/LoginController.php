@@ -45,6 +45,6 @@ class LoginController extends Controller
 
     public function decayMinutes()
     {
-        return 3;
+        return 10/60;
     }
 }

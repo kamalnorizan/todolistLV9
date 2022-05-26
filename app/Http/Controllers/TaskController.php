@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Mail;
 
 class TaskController extends Controller
 {
@@ -84,6 +85,20 @@ class TaskController extends Controller
     public function ratelimiter()
     {
         echo 'Accessed ratelimiter function';
+    }
+
+    public function sendEmail()
+    {
+        $name='John Doe';
+        Mail::send('mail.test1', compact('name'), function ($message) {
+            $message->from('kamalnorizan@gmail.com', 'Kamal Norizan');
+            $message->to('john@johndoe.com', 'John Doe');
+            $message->subject('Test Send Email');
+        });
+
+
+
+        echo 'Mail sent';
     }
 
     /**
