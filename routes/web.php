@@ -62,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 });
-Route::middleware('throttle:20,1')->get('task/ratelimiter',[TaskController::class,'ratelimiter'])->name('task.ratelimiter');
+Route::middleware('throttle:5,1')->get('task/ratelimiter',[TaskController::class,'ratelimiter'])->name('task.ratelimiter');
 
 Auth::routes();
 
