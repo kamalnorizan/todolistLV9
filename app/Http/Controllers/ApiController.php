@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\User;
 use Auth;
 class ApiController extends Controller
 {
@@ -11,6 +12,23 @@ class ApiController extends Controller
     {
         $tasks = Task::all();
         return response()->json($tasks);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validate($request,[
+            'name'=> 'required',
+            'email'=> 'required|email',
+            'password'=> 'required|min:8',
+        ]);
+
+        $user = User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>bcrypt($request->password)
+        ]);
+
+        return response()->json(['status'=>'successful'], 200);
     }
 
     public function login(Request $request)
