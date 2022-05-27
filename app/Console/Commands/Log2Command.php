@@ -4,15 +4,14 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-
-class LogCommand extends Command
+class Log2Command extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'createlog';
+    protected $signature = 'createsecondlog';
 
     /**
      * The console command description.
@@ -28,7 +27,6 @@ class LogCommand extends Command
      */
     public function handle()
     {
-        sleep(25);
-        return Log::info('This is laravel log by command');
+        return Log::info('This is laravel second log by command');
     }
 }

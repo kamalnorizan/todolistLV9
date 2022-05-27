@@ -15,7 +15,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('createlog')->everyMinute();
+        $schedule->command('createlog')->everyMinute()->runInBackground();
+        $schedule->command('createsecondlog')->everyMinute()->runInBackground();
+
+        // $schedule->command('createlog')->everyMinute()->sendOutputTo(public_path().'/output.txt');
+        // $schedule->command('createlog')->everyTwoMinutes();
+        // $schedule->command('createlog')->everyFifteenMinutes();
+
+        // $schedule->command('createlog')->daily();
+        // $schedule->command('createlog')->dailyAt('18:00');
+
+        // $schedule->command('createlog')->twiceDaily(1,13);
+
+        // $schedule->command('createlog')->weekly();
+        // $schedule->command('createlog')->weeklyOn(2,'08:00');
     }
 
     /**
