@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodolistController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\SettingsController;
 use App\Models\User;
 
 /*
@@ -62,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('task/sendEmail',[TaskController::class,'sendEmail'])->name('task.sendEmail');
     Route::get('task/userattach',[TaskController::class,'userattach'])->name('task.userattach');
 
-
+    Route::get('/settings', [SettingsController::class,'index']);
 });
 Route::middleware('throttle:5,1')->get('task/ratelimiter',[TaskController::class,'ratelimiter'])->name('task.ratelimiter');
 

@@ -39,6 +39,9 @@ class ApiController extends Controller
         ];
 
         if(auth()->attempt($data)){
+            foreach (auth()->user()->tokens as $key => $token) {
+                $token->revoke();
+            }
             $token = auth()->user()->createToken('Client Mobile Apps');
             return response()->json(['token'=>$token], 200);
         }else{
