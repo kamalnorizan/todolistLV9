@@ -25,4 +25,5 @@ Route::post('register',[ApiController::class,'register']);
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('user',[ApiController::class,'getUser']);
+    Route::get('user/logout',[ApiController::class,'logout']);
 });
