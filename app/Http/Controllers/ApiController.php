@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use Auth;
 class ApiController extends Controller
 {
     public function getTasks()
@@ -25,5 +26,11 @@ class ApiController extends Controller
         }else{
             return response()->json(['error'=>'Unauthorised'], 401);
         }
+    }
+
+    public function getUser()
+    {
+        $user = Auth::user();
+        return response()->json($user, 200);
     }
 }
